@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <Style>
+        /* div{
+            width: 200px;
+            background-color: red;
+        } */
+        /* a[href*="na"]{
+            display: block;
+            background-color: green;
+        } */
+
+        [cite]{
+            background-color: red;
+        }
+
+        #hh,
+        .pp,
+        cite {
+            color: green;
+        }
+
+
+
+        .ppa p::before, .ppa p::after {
+            background-color: wheat;
+            content: "ㅜㅜㅜㅜㅜ";
+        }
+
+        a:link{
+            color: red;
+        }
+        a:visited{
+            color: green;
+        }
+
+        button:hover {
+            background-color: red;
+        }
+
+        button:active{
+            color: aquamarine;
+        }
+
+        
+        .clear-element{
+            clear: both;
+        }
+
+        .a-clearfix{
+            display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    height: 300px;
+        }
+
+        .a-clearfix > div{
+            width: 100px;
+            height: 100px;
+            background: skyblue;
+            margin: 5px;
+            text-align: center;
+            line-height: 100px;
+        }
+    </Style>
+    
+</head>
+<body>
+    
+    <blockquote cite="https://ko.wikipedia.org/wiki/Romeo_and_Juliet">
+        
+        <p>
+            셰익스피어의 로미오와 줄리엣은 아서 브룩의 서사시 로미오와 줄리엣의 비극을 바탕으로 한 것이다.
+            아서 브룩의 서사시는 1562년 출간되었다.
+            셰익스피어는 아서 브룩의 서사시에서 줄거리를 가져왔다.
+            그러나 여러 등장 인물과 세부적인 이야기들은 셰익스피어의 독창적인 창작이다.
+        </p>
+
+
+        <footer>
+            <cite>위키피디아</cite>
+        </footer>
+
+
+    </blockquote>
+
+    <ins style="padding-left: 80px;">추가 텍스트</ins>
+    <del>삭제 텍스트</del>
+
+    <p id="hh">3<sub>3</sub>14</p>
+    <p class="pp">3<sup>3</sup>14</p>
+    
+    <div class="ppa">
+        <p>반가워요0</p>
+        <p>반<span>가</span>워요1</p>
+        <div>
+            <p>반가워요0</p>
+            <p>반<span>가</span>워요1</p>
+        </div>
+    </div>
+    <div>
+        <p>반가워요3</p>
+        <p>반가워요4</p>
+    </div>
+
+    <ul>
+        <li>목록1</li>
+        <li>목록2</li>
+        <li>목록3</li>
+    </ul>
+
+    <ol>
+        <li>목록1</li>
+        <li>목록2</li>
+        <li>목록3</li>
+    </ol>
+
+    <dl>
+        <dt>one</dt>
+        <dd>one=1</dd>
+        <dt>two</dt>
+        <dd>two=1</dd>
+    </dl>
+    
+    <a href="http://www.naver.com" target="_blank">네이버로 이동</a>
+
+    <img src="lion.jpg" alt="LionKing">
+
+    <a href="http://www.naver.com" target="_blank"><button>hello</button></a>
+    
+
+    <p>안녀앟세요 <strong>오준희</strong> 입니다</p>
+    <p>안녀앟세요 <em>오준희</em> 입니다</p>
+
+    
+
+    <div class="box">a</div>
+    <div class="box">a</div>
+    <div class="box">a</div>
+    <div class="clear-element">a</div>
+
+    <div class="a-clearfix">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <p>안녕하세요</p>
+    </div>
+
+<script src="hello.js"></script>
+</body>
+</html>

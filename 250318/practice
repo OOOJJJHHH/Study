@@ -1,0 +1,344 @@
+https://ddeck.tistory.com/30
+https://codingstep.tistory.com/entry/React-Api%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-Database%EC%97%90%EC%84%9C-Data-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0
+
+
+//==========================================================
+class Person {
+  String _name = " ";
+  int _age = 0;
+  
+  
+  String desc = "";
+
+  
+  String get name => _name;
+  int get age => _age;
+  
+  
+  Person(this._name, this._age, {this.desc = ''});
+
+  
+  void addOneYear() {
+    _age++;
+  }
+}
+
+void main() {
+  
+  
+  var p = Person("오준희", 80, desc: '오뜌기, 오줌');
+
+  
+  
+  
+  print(p.age);
+  print(p.name);
+
+  p.addOneYear();
+  print(p.age);
+
+  print(p.desc);
+}
+
+//==========================================================
+
+class Rectangle {
+  num left, top, width, height;
+
+  Rectangle(this.left, this.top, this.width, this.height);
+
+  num get right => left + width;
+  set right(num value) => left = value - width;
+
+  num get bottom => top + height;
+  set bottom(num value) => top = value + height;
+}
+
+void main() {
+  var r = Rectangle(5, 10, 15, 20);
+
+  print([r.left, r.top, r.width, r.height]);
+  print([r.right, r.bottom]);
+
+  r.right = 15;
+  r.bottom = 20;
+  print([r.left, r.top, r.width, r.height]);
+}
+
+
+//==========================================================
+
+class Rectangle {
+  num left, top, right, bottom;
+
+  Rectangle(this.left, this.top, this.right, this.bottom);
+
+  num get width => right + left;
+  set width(num value) => right = left + value;
+
+  num get height => bottom + top;
+  set height(num value) => bottom = top + value;
+}
+
+void main() {
+  var r = Rectangle(5, 10, 15, 20);
+
+  print([r.left, r.top, r.right, r.bottom]);
+  print([r.width, r.height]);
+
+  r.width = 40;
+  r.height = 60;
+
+  print([r.left, r.top, r.right, r.bottom]);
+  print([r.width, r.height]);
+}
+
+
+//==========================================================
+
+class Hero {
+  String name = '영웅';
+
+  void run() {
+    print('뛴다~!!');
+  }
+}
+
+class SuperHero extends Hero {
+  @override
+  void run() {
+    print("수퍼히어로");
+    super.run();
+    this.fly();
+    print("수퍼히어로 끝");
+  }
+
+  void fly() {
+    print('난다~~!!');
+  }
+}
+
+void main() {
+  Hero normalHero = Hero();
+  Hero superHero = SuperHero();
+
+  //   print(normalHero.name);
+  //   print(superHero.name);
+
+  //   normalHero.run();
+  //   superHero.run();
+
+  List<Hero> heroes = [normalHero, superHero];
+
+  heroes.forEach((hero) => hero.run());
+
+  //   SuperHero hero = new SuperHero();
+
+  //   hero.run();
+  //   hero.fly();
+  //   print(hero.name);
+  //   print(hero is SuperHero);
+  //   print(hero is Hero);
+}
+
+
+//==========================================================
+
+abstract class Monster {
+  void attack() {}
+}
+
+abstract class Flyable {
+  void fly() {}
+}
+
+class Goblin implements Monster {
+  @override
+  void attack() => print('고블린어택');
+}
+
+class Bat implements Monster, Flyable {
+  @override
+  void attack() => print("할퀴기");
+
+  @override
+  void fly() => print("날다");
+}
+
+void main() {
+  Goblin g1 = new Goblin();
+  g1.attack();
+
+  Bat m2 = new Bat();
+  m2.attack();
+  m2.fly();
+
+  print("");
+
+  List<Monster> monsters = [g1, m2];
+  monsters.forEach((m) {
+    m.attack();
+    if (m is Bat) {
+      (m as Bat).fly();
+    }
+  });
+}
+
+//==========================================================
+
+abstract class Monster {
+  void attack() {}
+}
+
+abstract class Flyable {
+  void fly() {}
+}
+
+class Goblin implements Monster {
+  @override
+  void attack() => print('고블린어택');
+}
+
+class Bat implements Monster, Flyable {
+  @override
+  void attack() => print("할퀴기");
+
+  @override
+  void fly() => print("날다");
+}
+
+void main() {
+  Goblin g1 = new Goblin();
+  g1.attack();
+
+  Bat m2 = new Bat();
+  m2.attack();
+  m2.fly();
+
+  print("");
+
+  List<Monster> monsters = [g1, m2];
+  monsters.forEach((m) {
+    m.attack();
+    if (m is Bat) {
+      (m as Bat).fly();
+    }
+  });
+}
+
+
+//==========================================================
+
+enum LoginStatus { login, logout }
+
+void main() {
+  LoginStatus status = LoginStatus.logout;
+  int nStatus = 1;
+
+  print(status);
+
+  switch (status) {
+    case LoginStatus.login:
+      print('로그인');
+      break;
+    case LoginStatus.logout:
+      print('로그아웃');
+      break;
+  }
+}
+
+
+//==========================================================
+
+void main() {
+  List<int> lottoNums = [5, 6, 7, 8, 2, 123];
+  Map<String, String> countryMap = {'한국': '서울', '일본': '도쿄', '중국': '북경'};
+  Set<int> setNums = {1, 2, 34, 45};
+
+  print(lottoNums[0]);
+  print(countryMap['일본']);
+  print(setNums.contains(2));
+
+  lottoNums.add(6);
+
+  print(lottoNums);
+
+  countryMap['인도'] = '뉴델리';
+  print(countryMap);
+
+  setNums.add(6);
+  print(setNums);
+}
+
+
+//==========================================================
+
+void main() {
+  var lottoNums = [43, 4457, 45, 76, 75];
+
+  lottoNums.forEach(print);
+  lottoNums.forEach((num) => print(num));
+  lottoNums.forEach((num) {
+    print(num);
+  });
+
+  var f = () => print('되네????');
+
+  f();
+}
+
+//==========================================================
+
+void main() {
+  final items = [1, 2, 3, 4, 5];
+
+  //   var result = items;
+  //   result.add(6);
+  //   result.remove(2);
+  //   print(result);
+
+  print(
+    items
+      ..add(6)
+      ..remove(2),
+  );
+}
+
+//==========================================================
+
+void main() {
+  bool promoActive = true;
+
+  var result = [1, 2, 3, 4, 5, 6, if (promoActive) 7];
+  print(result);
+}
+
+//==========================================================
+
+void main() {
+  var listOfInts = [1, 2, 3];
+
+  var listOfStrings = [
+    '#0',
+    for (var i in listOfInts) '#$i'
+  ];
+
+  print(listOfStrings);
+}
+
+//==========================================================
+
+class Person {
+  String? name;
+  int? age;
+}
+
+void main() {
+  String? name;
+  print(name);
+
+  var p = Person();
+  print([p.name, p.age]);
+
+  print(p.name?.length ?? 0);
+}

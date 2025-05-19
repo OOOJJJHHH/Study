@@ -1,0 +1,59 @@
+ec2 도커환경 구성 및 git pull, ec2 디렉토리에 저장하기 위한 Docker 컨테이너와 ec2 공간 연결
+
+1️⃣ Docker 설치 (Amazon Linux 2)
+bash
+코드 복사
+sudo yum update -y
+sudo amazon-linux-extras install docker -y
+sudo service docker start
+sudo usermod -a -G docker ec2-user
+⚠️ EC2 재접속 필수: usermod 후에는 현재 터미널을 재시작하거나 다시 로그인하세요.
+
+
+2️⃣ 프로젝트 디렉토리 생성 (EC2 내)
+예시 디렉토리: /home/ec2-user/my-project
+
+bash
+코드 복사
+mkdir -p /home/ec2-user/my-project
+
+
+3️⃣ Dockerfile 작성 (컨테이너 내부에서 Git pull)
+EC2 내에 Dockerfile을 하나 만들어주세요. 예를 들어 /home/ec2-user/my-project/Dockerfile:
+
+Dockerfile
+코드 복사
+FROM amazonlinux:2
+
+# git 및 gradle 설치
+RUN yum update -y && \
+    yum install -y git java-1.8.0-openjdk-devel && \
+    curl -s "https://get.sdkman.io" | bash && \
+    bash -c "source /root/.sdkman/bin/sdkman-init.sh && sdk install gradle"
+
+# 컨테이너 시작 시 git pull 수행
+CMD ["bash", "-c", "git clone https://github.com/your-username/your-repo.git /app"]
+🔁 이미 클론된 경우 git pull만 하도록 만들 수도 있어요. (원하면 예시 추가해드릴게요.)
+
+
+4️⃣ Docker와 EC2 디렉토리 연결 (볼륨 마운트)
+Docker 실행 시, EC2의 디렉토리를 컨테이너의 디렉토리로 마운트합니다.
+
+bash
+코드 복사
+docker build -t git-clone-container /home/ec2-user/my-project
+
+docker run --rm -v /home/ec2-user/my-project:/app git-clone-container
+-v /home/ec2-user/my-project:/app: EC2의 디렉토리(/home/ec2-user/my-project)를 컨테이너 내부의 /app에 연결
+
+컨테이너 내부에서 Git clone을 /app에 수행 → EC2에 저장됨
+
+
+✅ 요약
+항목	설명
+EC2 디렉토리	/home/ec2-user/my-project
+Docker 역할	컨테이너 내부에서 git clone 수행
+연결 방식	-v 옵션으로 EC2 디렉토리와 컨테이너 디렉토리 연결
+결과	Git clone 결과물이 EC2에 그대로 저장
+
+

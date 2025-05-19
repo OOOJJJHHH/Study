@@ -1,0 +1,82 @@
+import 'package:c_7_1/page1.dart';
+import 'package:c_7_1/page2.dart';
+import 'package:c_7_1/page3.dart';
+import 'package:flutter/material.dart';
+
+final dummyItems = [
+'https://cdn.pixabay.com/photo/2018/11/12/18/44/thanksgiving-3811492_1280.jpg',
+  'https://cdn.pixabay.com/photo/2019/10/30/15/33/tajikistan-4589831_1280.jpg',
+  'https://cdn.pixabay.com/photo/2019/11/25/16/15/sfari-4652364_1280.jpg',
+];
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  var _index = 0;
+  var _pages = [
+    Page1(),
+    Page2(),
+    Page3()
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.lightGreen,
+        title: Text("복잡하다 하지만 할만한 UI", style: TextStyle(color: Colors.orange)),
+        actions: [
+          IconButton(
+            onPressed: () {
+              print("클릭");
+            },
+            icon: Icon(Icons.add, color: Colors.red),
+          ),
+        ],
+        centerTitle: true,
+      ),
+      body: _pages[_index],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _index,
+        onTap: (index) {
+          setState(() {
+            _index = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(label: "홈", icon: Icon(Icons.home)),
+          BottomNavigationBarItem(label: "이용서비스", icon: Icon(Icons.assignment)),
+          BottomNavigationBarItem(
+            label: "내 정보",
+            icon: Icon(Icons.account_circle),
+          ),
+        ],
+      ),
+    );
+  }
+}

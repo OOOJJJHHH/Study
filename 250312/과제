@@ -1,0 +1,16 @@
+void main() {
+  // 특정 날짜 설정
+  DateTime date = DateTime(2002, 5, 21);
+
+  // 요일 구하기
+  String weekday = getWeekday(date);
+
+  // 결과 출력
+  print('2025년 3월 12일의 요일은 $weekday 입니다.');
+}
+
+String getWeekday(DateTime date) {
+  List<String> weekdays = ['월', '화', '수', '목', '금', '토', '일'];
+  // weekday의 반환값이 1~7로 나오기 때문에 -1을 해서 인덱스 번호를 맞춤
+  return weekdays[date.weekday - 1];
+}

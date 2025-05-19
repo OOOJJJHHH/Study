@@ -1,0 +1,17 @@
+// 도움받은 웹 사이트
+https://sj-d.tistory.com/50
+
+
+flutter pub add firebase_core
+
+dart pub global activate flutterfire_cli
+
+flutterfire configure --project=web-digital-label
+
+// 의존성 추가와 임포트
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+dependencies:
+  firebase_core: ^2.27.0
+  firebase_auth: ^4.16.0

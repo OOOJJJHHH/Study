@@ -1,0 +1,41 @@
+class SList:
+    class Node:
+        def __init__(self, item, link): #클래스의 생성자
+            self.item = item
+            self.next = link
+
+    #SList의 생성자자
+    def __init__(self):
+        print("난 SList의 생성자")
+        self.head = None
+        self.size = 0
+    
+    def isEmpty(self):
+        return self.size == 0
+
+    #특정한 데이터(ex: apple, orange), 앞쪽과 뒤쪽에 head 주소와 next 주소의 값을 삽입하기 위한 함수
+    def insert_front(self, item):
+        if self.isEmpty(): #self의 값 즉 Slist의 값이 비어있다면
+            self.head = self.Node(item, None) #head 주소의 값을 None으로 설정하고 Node함수를 통해서 값 삽입
+        else : #self의 값 즉 Slist의 값이 존재한다면
+            self.head = self.Node(item, self.head) #head의 주소값과 함께 item 값을 넘겨주어서 삽입
+        self.size += 1
+    
+    def printList(self):
+        p = self.head
+        while p:
+            if p.next is not None: #p의 다음 주소값이 비어있지 않다면 
+                print(p.item, "=>", end="")
+            else: #p의 다음 주소값이 비어있다면
+                print(p.item)
+            p = p.next
+
+
+def globalFunc():
+    pass
+
+if __name__ == "__main__":
+    s = SList()
+    s.insert_front("apple")
+    s.insert_front("mango")
+    s.printList()

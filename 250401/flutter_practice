@@ -1,0 +1,59 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  // 현재 시간 변수
+  String _currentTime = _getCurrentTime();
+
+  // Timer 객체
+  late Timer _timer;
+
+  // 1초마다 시간을 갱신하는 메소드
+  @override
+  void initState() {
+    super.initState();
+
+    // 1초마다 시간을 갱신하도록 설정
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _currentTime = _getCurrentTime(); // 현재 시간 갱신
+      });
+    });
+  }
+
+  // 현재 시간을 반환하는 함수
+  static String _getCurrentTime() {
+    DateTime now = DateTime.now();
+    return '${now.hour}:${now.minute}:${now.second}'; // 시:분:초 형식
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: '현재 시간 갱신',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('!!!    현재 시간 (출력)  !!!'),
+        ),
+        body: Center(
+          child: Text(
+            _currentTime, // 갱신된 시간 표시
+            style: TextStyle(
+              fontSize: 40,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

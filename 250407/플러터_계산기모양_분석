@@ -1,0 +1,181 @@
+====>  Widget build(BuildContext context) {
+#문장분석
+Widget : UI 요소(Column, Row, Container)들을 사용해서 화면에 어떤 UI를 만들 것인가 선언
+build : UI 요소(Column, Row, Container)를 가지고 화면을 구성한뒤 최종적으로 UI를 반환
+(BuildContext context) : 위젯 트리 내에서 부모-자식 관계를 설정하거나, 특정 위젯의 상위 위젯에서 제공된 값을 하위 위젯으로 전달하는 데 필요
+반드시 반환값이 있어야한다
+build 메서드에서 반환값이 없거나, null을 반환하는 경우 UI가 그려지지 않거나, 예상치 못한 오류가 발생
+
+MaterialApp
+Flutter에서 Material Design을 적용한 기본적인 앱 구조를 만드는 위젯
+일반적으로 앱의 루트 위젯으로 사용, 앱의 기본적인 UI 스타일과 내비게이션을 설정하는 데 사용
+- home
+  앱의 기본 화면을 설정
+
+Scaffold
+Flutter에서 화면 레이아웃을 구성하는 기본적인 구조 위젯
+앱바(AppBar), 본문(body), 하단의 바텀 네비게이션 바 등 다양한 기본적인 UI 구성 요소를 포함
+- appBar, body
+  화면 상단의 ""앱바"" 와 ""본문 내용"" 을 설정
+ex) 
+home: Scaffold(
+        appBar: AppBar(
+        ),
+        body: Padding(
+
+AppBar  (위 예제)
+화면 상단에 표시되는 헤더 또는 상단 바
+보통 앱의 제목, 뒤로 가기 버튼, 메뉴 버튼 등이 포함
+- title
+  앱바에 표시되는 ""제목"" 을 설정
+
+Text
+화면에 문자열을 표시하는 데 사용
+ex) 
+title: Text('Simple Calculator'),
+
+Padding 
+내부 여백을 설정하는 데 사용
+ex)
+body: Padding(
+          padding: const EdgeInsets.all(20.0),
+
+EdgeInsets  (위 예제)
+여백(margin/padding)을 설정하는 데 사용
+- EdgeInsets.all(20.0)
+  모든 방향에 20픽셀의 여백을 추가
+
+Column
+수직 방향으로 위젯들을 나열하는 데 사용
+자식 위젯들이 세로로 배치
+- mainAxisAlignment: MainAxisAlignment.center
+  세로 방향으로 자식 위젯들을 중앙에 정렬
+ex)
+child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+
+CalculatorButton
+사용자 정의 위젯
+※ 아래에서 추가 설명
+ex)
+Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  CalculatorButton('1'),
+                  CalculatorButton('2'),
+                  CalculatorButton('3'),
+                ],
+              ),
+
+mainAxisAlignment  (위 예제)
+주축(Main axis) 방향으로 자식 위젯들이 어떻게 배치될지 설정
+- MainAxisAlignment.center
+  자식 위젯들을 중앙 정렬
+- MainAxisAlignment.spaceEvenly
+  자식 위젯들 간의 간격을 균등하게 맞춤
+
+const
+컴파일 타임에 결정되는 상수 값을 선언할 때 사용
+- const EdgeInsets.all(20.0) 처럼 사용하여 해당 값이 변경되지 않음을 명시
+
+:::::: 요약 ::::::
+MaterialApp: Material Design을 적용한 앱의 기본 구조를 설정합니다.
+
+Scaffold: 기본적인 화면 레이아웃을 제공하는 위젯으로, 앱바와 본문 영역을 설정합니다.
+
+AppBar: 화면 상단의 제목 표시 바입니다.
+
+Text: 텍스트를 화면에 표시합니다.
+
+Padding: 내부 여백을 설정합니다.
+
+Column: 세로로 위젯을 배치하는 위젯입니다.
+
+Row: 가로로 위젯을 배치하는 위젯입니다.
+
+mainAxisAlignment: 자식 위젯들의 배치 방식을 설정합니다.
+
+CalculatorButton: 계산기 버튼을 나타내는 사용자 정의 위젯입니다.
+
+EdgeInsets: 여백을 설정하는 클래스입니다.
+
+const: 상수 값을 선언할 때 사용됩니다.
+
+====>  class CalculatorButton extends StatelessWidget
+#문장분석
+class : Dart에서 새로운 클래스를 정의하는 키워드
+CalculatorButton : 새로운 클래스를 정의하는 부분
+CalculatorButton : 위젯의 이름으로, 이 클래스는 계산기 버튼을 나타내는 역할을 합니다.
+extends StatelessWidget : StatelessWidget을 상속받고 있다는 뜻
+StatelessWidget : 상태를 가지지 않는 위젯을 만들 때 사용,  이 위젯은 불변(변경되지 않음), 상태 변화 없이 UI를 표시
+
+====>  final String label
+#문장분석
+final: 한 번 값을 할당하면 변경할 수 없는 변수로 설정
+final로 선언된 변수는 상수처럼 동작하지만, 컴파일 타임에 값을 정할 필요는 없다
+String label: 버튼에 표시될 텍스트를 저장하는 문자열
+label : 버튼에 어떤 숫자나 기호를 표시할지를 결정
+
+====>  CalculatorButton(this.label);
+#문장분석
+CalculatorButton(this.label) : 생성자는 클래스가 인스턴스화될 때 label 값을 전달받아 label 변수에 할당
+CalculatorButton('1'), CalculatorButton('2')와 같은 형태로 사용될 때, 생성자에서 버튼에 표시할 문자열(label)을 받음
+
+ElevatedButton
+Flutter에서 제공하는 기본적인 버튼 위젯
+입체적인 스타일을 가진 버튼
+사용자가 클릭할 수 있도록 만들어지고, 클릭 시 동작을 정의할 수 있다
+
+onPressed
+버튼이 클릭되었을 때 실행될 동작을 정의
+클릭 시 print 문을 사용하여 버튼 클릭을 콘솔에 출력하도록 설정되어 있다
+ex)
+onPressed: () {
+        // 버튼 클릭 시 할 작업 (여기서는 아무것도 안함)
+        print('Button $label clicked');
+      },
+
+====>  child: Text(label, style: TextStyle(fontSize: 24))
+#문장분석
+child : 버튼 안에 포함될 자식 위젯을 설정, Text 위젯을 사용하여 버튼에 텍스트를 표시합니다.
+label : CalculatorButton의 생성자에서 받은 텍스트를 버튼에 표시
+"style : TextStyle(fontSize: 24)" : 텍스트의 스타일을 설정, 글꼴 크기를 24로 설정
+
+====>  style: ElevatedButton.styleFrom(...)
+#문장분석
+style : ElevatedButton의 스타일을 설정하는 속성
+ElevatedButton.styleFrom : 버튼의 다양한 스타일 속성을 한 번에 설정할 수 있게 해주는 팩토리 메서드
+fixedSize: Size(80, 80) : 버튼의 고정된 크기를 설정, 버튼의 너비와 높이를 80x80 픽셀로 설정
+"shape : RoundedRectangleBorder(...)" : 버튼의 모서리 모양을 설정, RoundedRectangleBorder는 버튼의 모서리를 둥글게 만들어줌
+borderRadius: BorderRadius.circular(12): 버튼의 모서리 반지름을 설정, 12픽셀의 둥근 모서리를 설정
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

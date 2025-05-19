@@ -1,0 +1,29 @@
+void main() {
+  //정사각형의 길이를 입력하고 사각형을 출력하라
+  var length = 10;
+  var result = '';
+
+  bool pattern1(int a, int i, int j) {
+    var condition = i == 0;
+    condition |= i == (a - 1);
+    condition |= j == 0;
+    condition |= j == (a - 1);
+    condition |= j == ((a - 1) - i);
+    condition |= i == j;
+    return condition;
+  }
+
+  for (var i = 0; i < length; i++) {
+    for (var j = 0; j < length; j++) {
+      var c = pattern1(length, i, j);
+      if (c) {
+        result += '=';
+      } else {
+        result += ' ';
+      }
+    }
+    result += '\n';
+  }
+
+  print(result);
+}
