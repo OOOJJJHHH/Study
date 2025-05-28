@@ -1,0 +1,42 @@
+import json
+import boto3
+from datetime import datetime
+
+def lambda_handler(event, context):
+    # 클라이언트 및 리소스 생성
+    s3 = boto3.client('s3')
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table('sgu-202561-user-likes-time')
+
+    # 버킷과 키 지정
+    bucket_name = 'sgu-202561-s3'
+    object_key = 'dynamo_data/user_likes_data.json'
+
+    try:
+        # S3에서 JSON 파일 읽기
+        response = s3.get_object(Bucket=bucket_name, Key=object_key)
+        content = response['Body'].read().decode('utf-8')
+        data = json.loads(content)
+
+        # 타임스탬프 추가
+        timestamp = datetime.now().isoformat()
+        data['timestamp'] = timestamp
+
+        # DynamoDB 삽입
+        table.put_item(Item=data)
+
+        return {
+            'statusCode': 200,
+            'body': json.dumps({
+                'message': 'DynamoDB insert successful!',
+                'item': data
+            }, ensure_ascii=False)
+        }
+    
+    except Exception as e:
+        return {
+            'statusCode': 500,
+            'body': json.dumps({
+                'error': str(e)
+            }, ensure_ascii=False)
+        }
