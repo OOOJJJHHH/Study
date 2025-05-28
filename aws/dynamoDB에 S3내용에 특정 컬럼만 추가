@@ -1,0 +1,49 @@
+import json
+import boto3
+from datetime import datetime
+
+def lambda_handler(event, context):
+    s3 = boto3.client('s3')
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table('sgu-202561-user-likes-time')
+    bucket_name = 'sgu-202561-s3'
+    object_key = 'dynamo_data/user_likes_data_2.json'
+    
+    try:
+        # 1. S3에서 파일 가져오기
+        response = s3.get_object(Bucket=bucket_name, Key=object_key)
+        content = response['Body'].read().decode('utf-8')
+        raw_data = json.loads(content)
+        
+        # 2. 필요한 필드만 추출
+        user_id = raw_data.get('user_id')
+        product = raw_data.get('product')
+        if not user_id or not product:
+            return {
+                'statusCode': 400,
+                'body': '필수 데이터 누락: user_id 또는 product가 없습니다.'
+            }
+        
+        # 3. DynamoDB에 저장할 항목 구성
+        item = {
+            'user_id': user_id,
+            'timestamp': datetime.now().isoformat(),
+            'product': product
+        }
+        
+        # 4. insert
+        table.put_item(Item=item)
+        
+        return {
+            'statusCode': 200,
+            'body': json.dumps({
+                'message': '선택 필드만 Insert 완료',
+                'item': item
+            }, ensure_ascii=False)
+        }
+    
+    except Exception as e:
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error': str(e)}, ensure_ascii=False)
+        }
