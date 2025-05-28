@@ -1,0 +1,43 @@
+install.packages("multilinguer")
+library(multilinguer)
+
+install.packages(c("string", "hash", "tau", "Sejong", "RSQLite", "devtools"))
+
+install.packages("remotes")
+remotes::install_github("haven-jeon/KoNLP", upgrade = 'never', INSTALL_opts = c("--no-nultiarch"), force = TRUE)
+library(KoNLP)
+useSejongDic()
+
+install.packages("wordcloud")
+install.packages("RColorBrewer")
+library(wordcloud)
+library(RColorBrewer)
+
+
+setwd("Cloud/project")
+
+#1 데이터에서 단어만 추출
+d1 = readLines("BTS유엔연설_국문.txt")
+d1
+
+d2 = sapply(d1, extractNoun, USE.NAMES = F)
+d2
+
+d3 = unlist(d2)
+
+d3 = Filter(function(x){
+  nchar(x) <= 7
+}, d3)
+
+write(unlist(d3), "BTS_kor.txt")
+d4 = read.table("BTS_kor.txt")
+d4
+
+wc = table(d4)
+
+d3 = Filter(function(x){
+  nchar(x) >= 2
+}, d3)
+
+pal = brewer.pal(9, "Set3")
+wordcloud(names(wc), freq = wc, scale = c(5,1), rot.per = 0.25, min.freq = 2, random.color = T, random.order = F, colors = pal)
