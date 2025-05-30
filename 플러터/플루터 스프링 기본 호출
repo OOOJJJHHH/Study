@@ -1,0 +1,65 @@
+EX) Uri.parse('http://localhost:8080/api/auth/update');
+``` dart
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class SpringApiExample extends StatefulWidget {
+  @override
+  _SpringApiExampleState createState() => _SpringApiExampleState();
+}
+
+class _SpringApiExampleState extends State<SpringApiExample> {
+  String _message = 'Loading...';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchHelloMessage();
+  }
+
+  Future<void> fetchHelloMessage() async {
+    final url = Uri.parse('http://localhost:8080/api/hello'); // 로컬에서 실행 시 실제 디바이스에서는 localhost 대신 IP 필요
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          _message = data['message'];
+        });
+      } else {
+        setState(() {
+          _message = 'Error: ${response.statusCode}';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _message = 'Exception: $e';
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Spring Boot API 호출')),
+      body: Center(child: Text(_message)),
+    );
+  }
+}
+
+```
+``` java
+// 예제 Spring Boot 컨트롤러
+@RestController
+@RequestMapping("/api")
+public class HelloController {
+
+    @GetMapping("/hello")
+    public Map<String, String> sayHello() {
+        return Map.of("message", "Hello from Spring Boot!");
+    }
+}
+
+```
