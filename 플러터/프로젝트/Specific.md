@@ -22,8 +22,70 @@ CORS 설정 반드시 필요
 CORS 설정 필요 X
 도메인 접근하려고 할때 로컬호스트 접근 시 10.0.2.2를 사용
 헤더 부분에 있어서는 자유롭게 커스텀 할 수 있는 기능이 많이 있다
+```
 
 ```
+bottomNavigationBar를 통해 바텀 네비게이션 바에서 선택한 메뉴에 따라 화면이 전환되게 구현
+```
+
+```
+Flutter에서는 http 패키지를 사용해 REST API 요청을 보내고,
+Spring 서버에서는 JSON 응답을 받아 Flutter에서 이를 처리합니다.
+
+final uri = Uri.parse('http://localhost:8080/api/auth/getTopPosts');
+final response = await http.get(
+  uri,
+  headers: {
+    'Authorization': 'Bearer ${currentUser?.jwtToken ?? ''}',
+  },
+);
+
+- URI: 요청할 Spring API 경로 설정
+- Method: GET, POST, DELETE 등 HTTP 메서드 사용
+- Headers: JWT 토큰 같은 인증 정보 포함
+- Body: 필요 시 JSON 또는 Multipart Form Data 전송
+```
+
+```
+final decodedBody = utf8.decode(response.bodyBytes); // ✅ 한글 깨짐 방지
+```
+
+```
+로그인을 하면 스프링에 post 요청을 하고 해당 요청에 대한 응답으로 JWTToken을 톨려준다
+그리고 해당 토큰을 sharedPreference에 토큰과 이메일, 닉네임, 비번을 저장해서 전역에서 사용할 수 있도록 한다
+그리고 currentUser 라는 전역 변수에도 상태값을 저장해서 전역 상태에 영향을 준다
+```
+
+```
+sharedPreferences 사용 영역
+🔍 목적: 사용자가 오늘 이미 명언을 본 적이 있다면 다시 API를 호출하지 않도록 캐싱된 값을 불러옵니다.
+🔐 키 구조: ${이메일}_quote_2025-06-23처럼 유저별+날짜별로 저장
+```
+
+```
+ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('로그아웃 되었습니다.'),
+        backgroundColor: MyApp.primaryBrown,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+
+- SnackBar 위젯의 behavior 속성은 스낵바가 화면에 어떻게 표시될지 위치 및 레이아웃 방식을 지정하는 속성
+
+fixed	기본값. 화면 하단에 전체 너비로 고정됨. BottomNavigationBar 위에 붙음
+floating	스낵바가 모서리에서 살짝 떨어져서 띄워진 형태로 나타남. 둥글고 작아짐
+```
+
+```
+MaterialPageRoute(
+  builder: (context) => SomePage(),
+)
+
+- Flutter에서 기본으로 제공하는 페이지 전환 도구
+- 새 페이지로 전환할 때 builder에 다음 페이지 위젯을 지정
+```
+
 
 # 9_Week_프로젝트 계획서
 
